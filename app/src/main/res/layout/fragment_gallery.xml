@@ -1,0 +1,95 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="android.cse.diu.mehedi.phototovideo.fragment_pac.Gallery">
+
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="5dp">
+            <android.support.v7.widget.Toolbar
+
+                android:background="@color/actionBarColor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/toolbar"
+
+                >
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/next_button"
+                    android:id="@+id/nextButton"
+                    android:layout_gravity="end"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Choose 3 Photos"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                    android:layout_gravity="center"/>
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/back_button"
+                    android:id="@+id/backButton"
+                    android:layout_gravity="start"
+                    />
+
+
+            </android.support.v7.widget.Toolbar>
+        </android.support.design.widget.AppBarLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp">
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="10"
+                style="?android:attr/progressBarStyleHorizontal"
+
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="Converting to video - 30%"
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                android:id="@+id/progress_bar_text"/>
+            <GridView
+                android:layout_marginTop="5dp"
+                android:id="@+id/grid_items"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:columnWidth="280dp"
+                android:gravity="center"
+                android:horizontalSpacing="2dp"
+                android:numColumns="3"
+                android:padding="2dp"
+                android:stretchMode="columnWidth"
+                android:verticalSpacing="10dp"
+
+                ></GridView>
+            
+
+
+        </LinearLayout>
+
+</LinearLayout>
+
+
+
+
+
+
+
