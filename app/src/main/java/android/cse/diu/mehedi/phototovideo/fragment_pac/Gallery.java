@@ -1,21 +1,19 @@
 package android.cse.diu.mehedi.phototovideo.fragment_pac;
 
 
-import android.cse.diu.mehedi.phototovideo.BitmapEditor;
-import android.cse.diu.mehedi.phototovideo.GettingImages;
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.cse.diu.mehedi.phototovideo.controller_classes.BitmapEditor;
+import android.cse.diu.mehedi.phototovideo.controller_classes.GettingImages;
 import android.cse.diu.mehedi.phototovideo.adapter_class.GridAdapter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Rect;
-import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,11 +73,10 @@ public class Gallery extends Fragment {
 
         bitmapEditor = new BitmapEditor();
 
-        ///getting Images from gallery to list
+        mProgressBar.setVisibility(View.INVISIBLE);
 
-        imagesList = new GettingImages().getAllShownImagesPath(getActivity());
-        gridAdapter = new GridAdapter(getActivity(), imagesList);
-        gridView.setAdapter(gridAdapter);
+        ///getting Images from gallery to list
+        checkPerMission();
 
         ////choosing photo
 
@@ -87,16 +84,13 @@ public class Gallery extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 
-
                 if (choosenImage.size() >= 3) {
                     Toast.makeText(getActivity(), "You Can Only Select 3 Images", Toast.LENGTH_SHORT).show();
                 } else {
-
                     convertToBitmap(imagesList.get(position));
+                    enableButtonNext();
                     Toast.makeText(getActivity(), ""+choosenImage.size()+" Image Selected", Toast.LENGTH_SHORT).show();
                 }
-
-
             }
         });
 
@@ -120,6 +114,32 @@ public class Gallery extends Fragment {
         return view;
     }
 
+    private void checkPerMission() {
+        try {
+            if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_DENIED && ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_DENIED ){
+                Toast.makeText(getActivity(), "Allow permission for use this application", Toast.LENGTH_SHORT).show();
+
+            }else {
+                imagesList = new GettingImages().getAllShownImagesPath(getActivity());
+                gridAdapter = new GridAdapter(getActivity(), imagesList);
+                gridView.setAdapter(gridAdapter);
+                Toast.makeText(getActivity(), "Select 3 Images", Toast.LENGTH_SHORT).show();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void enableButtonNext() {
+        if (choosenImage.size()==3){
+            nextImg.setEnabled(true);
+            nextImg.setVisibility(View.VISIBLE);
+        }
+    }
+
     private void convertToBitmap(String s) {
 
         File imgFile = new  File(s);
@@ -136,15 +156,9 @@ public class Gallery extends Fragment {
 
 
     private void nextToVideoPage(){
-
-
-        if (choosenImage.size()==3){
-
-           new ProgressTask().execute();
-        }else {
-            Toast.makeText(getActivity(), "Select At Least 3 Photos", Toast.LENGTH_LONG).show();
-        }
-
+        Toast.makeText(getActivity(), "Please Wait Few Minute..", Toast.LENGTH_LONG).show();
+        mProgressBar.setVisibility(View.VISIBLE);
+        new ProgressTask().execute();
     }
 
 
@@ -161,8 +175,6 @@ public class Gallery extends Fragment {
 
         @Override
         protected Void doInBackground(Void... voids) {
-
-           // String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
             choosenImage = bitmapEditor.getTextInVideo(choosenImage);
             FileChannelWrapper out = null;
             File dir = new File(Environment.getExternalStorageDirectory() + "/" );
@@ -210,7 +222,7 @@ public class Gallery extends Fragment {
             super.onProgressUpdate(values);
 
             mProgressBar.setProgress(values[0]);
-            mProgressBarText.setText("Please wait...Coverting to video "+values[0]+"0%");
+            mProgressBarText.setText("Coverting to video "+values[0]+"0%");
 
         }
 
@@ -220,9 +232,7 @@ public class Gallery extends Fragment {
             super.onPostExecute(aVoid);
 
             Toast.makeText(getActivity(), "Video is Created", Toast.LENGTH_LONG).show();
-
             VideoFromPhoto videoFromPhoto = new VideoFromPhoto();
-
             FragmentTransaction fragmentTransaction = getActivity().getFragmentManager().beginTransaction()
                     .replace(R.id.fragmentContainer, videoFromPhoto);
             fragmentTransaction.addToBackStack(null);

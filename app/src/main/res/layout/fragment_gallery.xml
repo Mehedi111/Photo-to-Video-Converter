@@ -20,6 +20,8 @@
                 >
 
                 <ImageView
+                    android:clickable="false"
+                    android:visibility="invisible"
                     android:layout_width="50dp"
                     android:layout_height="30dp"
                     android:src="@drawable/next_button"
@@ -62,7 +64,6 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:text="Converting to video - 30%"
                 android:gravity="center"
                 android:textColor="@android:color/white"
                 android:id="@+id/progress_bar_text"/>
@@ -71,10 +72,9 @@
                 android:id="@+id/grid_items"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:columnWidth="280dp"
                 android:gravity="center"
                 android:horizontalSpacing="2dp"
-                android:numColumns="3"
+                android:numColumns="auto_fit"
                 android:padding="2dp"
                 android:stretchMode="columnWidth"
                 android:verticalSpacing="10dp"

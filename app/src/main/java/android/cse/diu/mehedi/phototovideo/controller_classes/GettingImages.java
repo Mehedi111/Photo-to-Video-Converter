@@ -1,4 +1,4 @@
-package android.cse.diu.mehedi.phototovideo;
+package android.cse.diu.mehedi.phototovideo.controller_classes;
 
 import android.app.Activity;
 import android.content.Context;

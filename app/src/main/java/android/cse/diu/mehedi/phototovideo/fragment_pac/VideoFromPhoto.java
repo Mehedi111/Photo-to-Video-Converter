@@ -61,7 +61,6 @@ public class VideoFromPhoto extends Fragment {
                 CreatePage createPage = new CreatePage();
                 FragmentTransaction fragmentTransaction = getActivity().getFragmentManager().beginTransaction()
                         .replace(R.id.fragmentContainer, createPage);
-                fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
             }
         });

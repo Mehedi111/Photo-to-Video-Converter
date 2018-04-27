@@ -1,15 +1,20 @@
 package android.cse.diu.mehedi.phototovideo.fragment_pac;
 
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import android.cse.diu.mehedi.phototovideo.R;
 import android.widget.Button;
+import android.widget.Toast;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -39,11 +44,13 @@ public class CreatePage extends Fragment {
                 FragmentTransaction fragmentTransaction = getActivity().getFragmentManager().beginTransaction()
                         .replace(R.id.fragmentContainer, gallery);
                 fragmentTransaction.commit();
-
             }
         });
 
         return view;
     }
+
+
+
 
 }
